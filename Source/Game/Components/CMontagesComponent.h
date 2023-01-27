@@ -36,6 +36,9 @@ class GAME_API UCMontagesComponent : public UActorComponent
 public:	
 	UCMontagesComponent();
 
+	void PlayRoll();
+	void PlayBackStep();
+
 protected:
 	virtual void BeginPlay() override;
 
