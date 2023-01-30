@@ -1,4 +1,8 @@
 #include "CActionComponent.h"
+#include "Global.h"
+#include "Actions/CActionData.h"
+#include "Actions/CEquipment.h"
+#include "GameFramework/Character.h"
 
 UCActionComponent::UCActionComponent()
 {
@@ -7,15 +11,29 @@ UCActionComponent::UCActionComponent()
 void UCActionComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
+	ACharacter* character = Cast<ACharacter>(GetOwner());
+
+	for (int32 i = 0; i < (int32)EActionType::Max; i++)
+	{
+		if(Datas[i] != nullptr)
+			Datas[i]->BeginPlay(character);
+	}
 }
 
 void UCActionComponent::SetUnarmedMode()
 {
+	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetEquipment())
+		Datas[(int32)Type]->GetEquipment()->Unequip();
+
+	Datas[(int32)EActionType::Unarmed]->GetEquipment()->Equip();
+
 	ChangeType(EActionType::Unarmed);
 }
 
 void UCActionComponent::SetFistMode()
 {
+	PrintLine();
 	SetMode(EActionType::Fist);
 }
 
@@ -51,6 +69,16 @@ void UCActionComponent::SetMode(EActionType InNewType)
 		SetUnarmedMode();
 		return;
 	}
+	else if (IsUnarmedMode() == false)
+	{
+		if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetEquipment())
+			Datas[(int32)Type]->GetEquipment()->Unequip();
+	}
+
+	PrintLine();
+
+	if (Datas[(int32)InNewType] != nullptr && Datas[(int32)InNewType]->GetEquipment())
+		Datas[(int32)InNewType]->GetEquipment()->Equip();
 
 	ChangeType(InNewType);
 }
