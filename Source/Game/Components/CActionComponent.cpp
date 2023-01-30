@@ -33,7 +33,6 @@ void UCActionComponent::SetUnarmedMode()
 
 void UCActionComponent::SetFistMode()
 {
-	PrintLine();
 	SetMode(EActionType::Fist);
 }
 
@@ -74,8 +73,6 @@ void UCActionComponent::SetMode(EActionType InNewType)
 		if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetEquipment())
 			Datas[(int32)Type]->GetEquipment()->Unequip();
 	}
-
-	PrintLine();
 
 	if (Datas[(int32)InNewType] != nullptr && Datas[(int32)InNewType]->GetEquipment())
 		Datas[(int32)InNewType]->GetEquipment()->Equip();

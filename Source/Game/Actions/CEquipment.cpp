@@ -21,7 +21,7 @@ void ACEquipment::Equip_Implementation()
 {
 	State->SetEquipMode();
 
-	if(!!Data.AnimMontage)
+	if (Data.AnimMontage != nullptr)
 		OwnerCharacter->PlayAnimMontage(Data.AnimMontage, Data.PlayRate, Data.StartSection);
 	else
 	{
@@ -38,7 +38,7 @@ void ACEquipment::Begin_Equip_Implementation()
 
 void ACEquipment::End_Equip_Implementation()
 {
-	// Change State Idle
+	State->SetIdleMode();
 }
 
 void ACEquipment::Unequip_Implementation()

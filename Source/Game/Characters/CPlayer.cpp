@@ -191,7 +191,6 @@ void ACPlayer::End_BackStep()
 void ACPlayer::OnFist()
 {
 	CheckFalse(State->IsStateIdle());
-	PrintLine();
 	Action->SetFistMode();
 }
 
