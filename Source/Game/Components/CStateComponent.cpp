@@ -2,12 +2,15 @@
 
 UCStateComponent::UCStateComponent()
 {
+
 }
+
 
 void UCStateComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
 }
 
 void UCStateComponent::SetIdleMode()
@@ -38,3 +41,5 @@ void UCStateComponent::ChangeType(EStateType InNewType)
 	if (OnStateTypeChanged.IsBound())
 		OnStateTypeChanged.Broadcast(prevType, Type);
 }
+
+

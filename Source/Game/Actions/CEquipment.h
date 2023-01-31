@@ -6,6 +6,7 @@
 #include "CEquipment.generated.h"
 
 DECLARE_DYNAMIC_MULTICAST_DELEGATE(FEquipmentDelegate);
+DECLARE_DYNAMIC_MULTICAST_DELEGATE(FUnequipmentDelegate);
 
 UCLASS()
 class GAME_API ACEquipment : public AActor
@@ -15,8 +16,8 @@ class GAME_API ACEquipment : public AActor
 public:	
 	ACEquipment();
 
-	FORCEINLINE void SetData(const FEquipmentData InData) { Data = InData; }
-	FORCEINLINE void SetColor(const FLinearColor InColor) { Color = InColor; }
+	FORCEINLINE void SetData(FEquipmentData InData) { Data = InData; }
+	FORCEINLINE void SetColor(FLinearColor InColor) { Color = InColor; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -39,7 +40,10 @@ public:
 	void Unequip_Implementation();
 
 public:
-	FEquipmentDelegate OnEquipmentDelegate;
+	UPROPERTY(BlueprintAssignable)
+		FEquipmentDelegate OnEquipmentDelegate;
+	UPROPERTY(BlueprintAssignable)
+		FUnequipmentDelegate OnUnequipmentDelegate;
 
 protected:
 	UPROPERTY(BlueprintReadOnly)

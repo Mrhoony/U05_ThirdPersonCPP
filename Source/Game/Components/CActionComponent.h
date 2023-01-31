@@ -25,7 +25,11 @@ protected:
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsUnarmedMode() { return Type == EActionType::Unarmed; }
+		FORCEINLINE class UCActionData* GetCurrent() { return Datas[(int32)Type]; }
+
+public:
+	UFUNCTION(BlueprintPure)
+		FORCEINLINE bool IsUnaremdMode() { return Type == EActionType::Unarmed; }
 
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsFistMode() { return Type == EActionType::Fist; }
@@ -37,21 +41,21 @@ public:
 		FORCEINLINE bool IsTwoHandMode() { return Type == EActionType::TwoHand; }
 
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsWarpMode() { return Type == EActionType::Warp; }
+		FORCEINLINE bool IsWarpHandMode() { return Type == EActionType::Warp; }
 
 	UFUNCTION(BlueprintPure)
 		FORCEINLINE bool IsMagicBallMode() { return Type == EActionType::MagicBall; }
 
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE bool IsStormMode() { return Type == EActionType::Storm; }
+		FORCEINLINE bool IsStormBallMode() { return Type == EActionType::Storm; }
 
 public:
-	void SetUnarmedMode();
+	void SetUnaremdMode();
 	void SetFistMode();
 	void SetOneHandMode();
 	void SetTwoHandMode();
 	void SetWarpMode();
-	void SetMagicBallMode();
+	void SetMagicMode();
 	void SetStormMode();
 
 public:

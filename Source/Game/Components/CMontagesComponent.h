@@ -14,16 +14,16 @@ struct FMontageData : public FTableRowBase
 public:
 	UPROPERTY(EditAnywhere)
 		EStateType Type;
-	
+
 	UPROPERTY(EditAnywhere)
 		class UAnimMontage* AnimMontage;
-	
+
 	UPROPERTY(EditAnywhere)
 		float PlayRate = 1.f;
-	
+
 	UPROPERTY(EditAnywhere)
 		FName StartSection;
-	
+
 	UPROPERTY(EditAnywhere)
 		bool bCanMove;
 };
@@ -48,7 +48,7 @@ private:
 
 private:
 	void PlayAnimMontage(EStateType InType);
-
+		
 private:
 	FMontageData* Datas[(int32)EStateType::Max];
 };

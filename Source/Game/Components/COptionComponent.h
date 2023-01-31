@@ -4,6 +4,7 @@
 #include "Components/ActorComponent.h"
 #include "COptionComponent.generated.h"
 
+
 UCLASS( ClassGroup=(Custom), meta=(BlueprintSpawnableComponent) )
 class GAME_API UCOptionComponent : public UActorComponent
 {
@@ -18,6 +19,7 @@ protected:
 public:
 	FORCEINLINE float GetHorizontalLookRate() { return HorizontalLookRate; }
 	FORCEINLINE float GetVerticalLookRate() { return VerticalLookRate; }
+
 	FORCEINLINE float GetZoomSpeed() { return ZoomSpeed; }
 	FORCEINLINE FVector2D GetZoomRange() { return ZoomRange; }
 
@@ -30,7 +32,7 @@ private:
 	
 	UPROPERTY(EditAnywhere)
 		float ZoomSpeed = 1000.f;
-	
+
 	UPROPERTY(EditAnywhere)
 		FVector2D ZoomRange = FVector2D(50, 500);
 };

@@ -5,9 +5,12 @@ UCOptionComponent::UCOptionComponent()
 
 }
 
+
 void UCOptionComponent::BeginPlay()
 {
 	Super::BeginPlay();
+
 	
 }
+
 

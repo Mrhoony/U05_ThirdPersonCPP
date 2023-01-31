@@ -1,18 +1,20 @@
 #include "CMontagesComponent.h"
 #include "Global.h"
-#include "Gameframework/Character.h"
+#include "GameFramework/Character.h"
 
 UCMontagesComponent::UCMontagesComponent()
 {
+
 }
+
 
 void UCMontagesComponent::BeginPlay()
 {
 	Super::BeginPlay();
-	CheckNull(DataTable);
+
 	if (DataTable == nullptr)
 	{
-		CLog::Log("DataTable is not found in" + GetOwner()->GetName());
+		CLog::Log("DataTable is not found in " + GetOwner()->GetName());
 		return;
 	}
 
@@ -25,12 +27,13 @@ void UCMontagesComponent::BeginPlay()
 		{
 			if ((EStateType)i == data->Type)
 			{
-				Datas[i] = data;			
+				Datas[i] = data;
 				continue;
 			}
 		}
 	}
-}
+
+}	
 
 void UCMontagesComponent::PlayRoll()
 {
@@ -44,13 +47,14 @@ void UCMontagesComponent::PlayBackStep()
 
 void UCMontagesComponent::PlayAnimMontage(EStateType InType)
 {
-	ACharacter* owner = Cast<ACharacter>(GetOwner());
-	CheckNull(owner);
+	ACharacter* character = Cast<ACharacter>(GetOwner());
+	CheckNull(character);
 
 	const FMontageData* data = Datas[(int32)InType];
-	if (data != nullptr)
+
+	if (!!data)
 	{
-		if(data->AnimMontage != nullptr)
-			owner->PlayAnimMontage(data->AnimMontage, data->PlayRate, data->StartSection);
+		if (!!data->AnimMontage)
+			character->PlayAnimMontage(data->AnimMontage, data->PlayRate, data->StartSection);
 	}
 }

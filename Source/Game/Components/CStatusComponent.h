@@ -31,7 +31,7 @@ private:
 
 	UPROPERTY(EditAnywhere, Category = "Speed")
 		float WalkSpeed = 400;
-
+		
 	UPROPERTY(EditAnywhere, Category = "Speed")
 		float RunSpeed = 600;
 

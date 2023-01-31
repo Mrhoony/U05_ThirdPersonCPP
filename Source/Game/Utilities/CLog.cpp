@@ -45,22 +45,22 @@ void CLog::Log(const FString& InValue)
 
 void CLog::Log(const FVector& InValue)
 {
-	UE_LOG(GameProject, Display, L"%d", *InValue.ToString());
+	UE_LOG(GameProject, Display, L"%s", *InValue.ToString());
 }
 
 void CLog::Log(const FRotator& InValue)
 {
-	UE_LOG(GameProject, Display, L"%d", *InValue.ToString());
+	UE_LOG(GameProject, Display, L"%s", *InValue.ToString());
 }
 
 void CLog::Log(const UObject* InObject)
 {
 	FString str;
-	if (InObject != nullptr) // (!!InObject) !! : not null (!= 와 같다 / 언리얼에서만 가능한 문법)
+	if (!!InObject)
 		str.Append(InObject->GetName());
-	
-	str.Append(!!InObject ? "is not null" : "NULL");
-	
+
+	str.Append(!!InObject ? " is not null" : "Null");
+
 	UE_LOG(GameProject, Display, L"%s", *str);
 }
 
@@ -71,5 +71,4 @@ void CLog::Log(const FString& InFuncName, int32 InLineNumber)
 	str.Append(", ");
 	str.Append(FString::FromInt(InLineNumber));
 	UE_LOG(GameProject, Display, L"%s", *str);
-
 }

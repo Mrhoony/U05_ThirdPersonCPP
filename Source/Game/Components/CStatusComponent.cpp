@@ -5,10 +5,12 @@ UCStatusComponent::UCStatusComponent()
 
 }
 
+
 void UCStatusComponent::BeginPlay()
 {
 	Super::BeginPlay();
 
+	
 }
 
 void UCStatusComponent::SetMove()
@@ -20,3 +22,5 @@ void UCStatusComponent::SetStop()
 {
 	bCanMove = false;
 }
+
+

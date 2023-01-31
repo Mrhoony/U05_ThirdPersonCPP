@@ -24,10 +24,10 @@ protected:
 	virtual void BeginPlay() override;
 
 public:
-	FORCEINLINE bool IsStateIdle() { return Type == EStateType::Idle; }
-	FORCEINLINE bool IsStateRoll() { return Type == EStateType::Roll; }
-	FORCEINLINE bool IsStateBackStep() { return Type == EStateType::BackStep; }
-	FORCEINLINE bool IsStateEquip() { return Type == EStateType::Equip; }
+	FORCEINLINE bool IsIdleMode() { return Type == EStateType::Idle; }
+	FORCEINLINE bool IsRollMode() { return Type == EStateType::Roll; }
+	FORCEINLINE bool IsBackSteMode() { return Type == EStateType::BackStep; }
+	FORCEINLINE bool IsEquipMode() { return Type == EStateType::Equip; }
 
 public:
 	void SetIdleMode();
@@ -45,3 +45,4 @@ public:
 private:
 	EStateType Type;
 };
+

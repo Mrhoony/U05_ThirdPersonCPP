@@ -6,6 +6,7 @@ FString UCAnimNotify_Rolled::GetNotifyName_Implementation() const
 {
 	return "Rolled";
 }
+
 void UCAnimNotify_Rolled::Notify(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)
 {
 	Super::Notify(MeshComp, Animation);

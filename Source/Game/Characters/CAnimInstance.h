@@ -27,4 +27,5 @@ public:
 private:
 	UFUNCTION()
 		void OnActionTypeChanged(EActionType InPrevType, EActionType InNewType);
+	
 };
