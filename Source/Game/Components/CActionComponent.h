@@ -58,6 +58,8 @@ public:
 	void SetMagicMode();
 	void SetStormMode();
 
+	void DoAction();
+
 public:
 	UPROPERTY(BlueprintAssignable)
 		FActionTypeChanged OnActionTypeChanged;

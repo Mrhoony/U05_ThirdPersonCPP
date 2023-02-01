@@ -2,13 +2,12 @@
 #include "Global.h"
 #include "Actions/CActionData.h"
 #include "Actions/CEquipment.h"
+#include "Actions/CDoAction.h"
 #include "GameFramework/Character.h"
 
 UCActionComponent::UCActionComponent()
 {
-
 }
-
 
 void UCActionComponent::BeginPlay()
 {
@@ -63,6 +62,19 @@ void UCActionComponent::SetMagicMode()
 void UCActionComponent::SetStormMode()
 {
 	SetMode(EActionType::Storm);
+}
+
+void UCActionComponent::DoAction()
+{
+	CheckTrue(IsUnaremdMode());
+
+	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetDoAction())
+	{
+		ACDoAction* doAction = Datas[(int32)Type]->GetDoAction();
+
+		if(doAction != nullptr)
+			doAction->DoAction();
+	}
 }
 
 void UCActionComponent::SetMode(EActionType InNewType)

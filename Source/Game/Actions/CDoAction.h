@@ -2,6 +2,7 @@
 
 #include "CoreMinimal.h"
 #include "GameFramework/Actor.h"
+#include "CActionData.h"
 #include "CDoAction.generated.h"
 
 UCLASS()
@@ -11,6 +12,8 @@ class GAME_API ACDoAction : public AActor
 	
 public:	
 	ACDoAction();
+
+	FORCEINLINE void SetDatas(TArray<FDoActionData> InDatas) { Datas = InDatas; }
 
 protected:
 	virtual void BeginPlay() override;
@@ -32,4 +35,7 @@ protected:
 
 	UPROPERTY(BlueprintReadOnly)
 		class UCStatusComponent* Status;
+
+protected:
+	TArray<FDoActionData> Datas;
 };
