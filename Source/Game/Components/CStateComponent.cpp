@@ -2,15 +2,11 @@
 
 UCStateComponent::UCStateComponent()
 {
-
 }
-
 
 void UCStateComponent::BeginPlay()
 {
-	Super::BeginPlay();
-
-	
+	Super::BeginPlay();	
 }
 
 void UCStateComponent::SetIdleMode()
@@ -38,6 +34,16 @@ void UCStateComponent::SetActionMode()
 	ChangeType(EStateType::Action);
 }
 
+void UCStateComponent::SetHittedMode()
+{
+	ChangeType(EStateType::Hitted);
+}
+
+void UCStateComponent::SetDeadMode()
+{
+	ChangeType(EStateType::Dead);
+}
+
 void UCStateComponent::ChangeType(EStateType InNewType)
 {
 	EStateType prevType = Type;
@@ -46,5 +52,3 @@ void UCStateComponent::ChangeType(EStateType InNewType)
 	if (OnStateTypeChanged.IsBound())
 		OnStateTypeChanged.Broadcast(prevType, Type);
 }
-
-

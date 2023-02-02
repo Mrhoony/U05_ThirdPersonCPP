@@ -38,6 +38,7 @@ public:
 
 	void PlayRoll();
 	void PlayBackStep();
+	void PlayHitted();
 
 protected:
 	virtual void BeginPlay() override;

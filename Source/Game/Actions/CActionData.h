@@ -39,7 +39,7 @@ struct FDoActionData : public FEquipmentData
 
 public:
 	UPROPERTY(EditAnywhere)
-		float power = 5.f;
+		float Power = 5.f;
 
 	UPROPERTY(EditAnywhere)
 		float HitStop;
