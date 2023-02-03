@@ -17,6 +17,18 @@ public:
 	virtual void OnAttachmentBeginOverlap(class ACharacter* InAttacker, class AActor* InCauser, class ACharacter* InOtherCharacter) override;
 	virtual void OnAttachmentEndOverlap(class ACharacter* InAttacker, class AActor* InCauser, class ACharacter* InOtherCharacter) override;
 
+public:
+	FORCEINLINE void EnableCombo() { bCanCombo = true; }
+	FORCEINLINE void DisableCombo() { bCanCombo = false; }
+	FORCEINLINE void ClearHittedCharacters() { HittedCharacters.Empty(); }
+
+private:
+	UFUNCTION()
+		void RestoreGlobalTimeDilation();
 private:
 	int32 ComboCount;
+	bool bCanCombo;
+	bool bSucceed;
+
+	TArray<class ACharacter*> HittedCharacters;
 };
