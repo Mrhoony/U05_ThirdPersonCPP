@@ -27,12 +27,18 @@ private:
 	void Hitted();
 	void Dead();
 
+	UFUNCTION()
+		void End_Dead();
+
 protected:
 	virtual void BeginPlay() override;
 
 private:
 	UPROPERTY(EditAnywhere)
 		float LaunchValue = 25.f;
+
+	UPROPERTY(EditAnywhere)
+		float DeadLaunchValue = 1e+7f;
 
 	UPROPERTY(VisibleDefaultsOnly)
 		class UWidgetComponent* NameWidget;

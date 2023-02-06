@@ -13,6 +13,7 @@
 #include "Materials/MaterialInstanceDynamic.h"
 #include "GameFramework/CharacterMovementComponent.h"
 #include "Components/WidgetComponent.h"
+#include "Components/CapsuleComponent.h"
 
 ACEnemy::ACEnemy()
 {
@@ -129,6 +130,8 @@ float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AContro
 	Causer = DamageCauser;
 	Attacker = Cast<ACharacter>(EventInstigator->GetPawn());
 
+	CLog::Print(DamageValue, -1, 1.0f);
+
 	Status->DecreaseHealth(DamageValue);
 
 	if (Status->GetHealth() <= 0.f)
@@ -167,4 +170,33 @@ void ACEnemy::Hitted()
 
 void ACEnemy::Dead()
 {
+	CheckFalse(State->IsDeadMode());
+
+	// Widget Visible False
+	NameWidget->SetVisibility(false);
+	HealthWidget->SetVisibility(false);
+
+	// All Weapon Collision Disable
+	Action->Dead();
+
+	// Ragdoll
+	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
+	GetMesh()->GlobalAnimRateScale = 0.f;
+	GetMesh()->SetSimulatePhysics(true);
+	GetMesh()->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+
+	FVector start = GetActorLocation();
+	FVector target = Attacker->GetActorLocation();
+	FVector direction = start - target;
+	direction.Normalize();
+
+	GetMesh()->AddForce(direction * DamageValue * DeadLaunchValue);
+
+	UKismetSystemLibrary::K2_SetTimer(this, "End_Dead", 5.f, false);
+}
+
+void ACEnemy::End_Dead()
+{
+	Action->End_Dead();
+	Destroy();
 }

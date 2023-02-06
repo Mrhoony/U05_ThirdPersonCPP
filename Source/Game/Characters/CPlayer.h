@@ -63,8 +63,12 @@ private:
 	void OnFist();
 	void OnOneHand();
 	void OnTwoHand();
+	void OnMagicBall();
 
 	void OnDoAction();
+
+	void OnAim();
+	void OffAim();
 
 private:
 	void Begin_Roll();

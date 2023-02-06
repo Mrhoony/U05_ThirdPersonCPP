@@ -18,7 +18,13 @@ void UCAnimNotifyState_Collision::NotifyBegin(USkeletalMeshComponent* MeshComp, 
 	UCActionComponent* action = CHelpers::GetComponent<UCActionComponent>(MeshComp->GetOwner());
 	CheckNull(action);
 
-	action->GetCurrent()->GetAttachment()->OnCollisions();
+	ACDoAction_Melee* melee = Cast<ACDoAction_Melee>(action->GetCurrent()->GetDoAction());
+	if (melee != nullptr)
+	{
+		action->GetCurrent()->GetAttachment()->OnCollisions(melee->GetSpecificCollisionName());
+	}
+	else
+		action->GetCurrent()->GetAttachment()->OnCollisions();
 }
 
 void UCAnimNotifyState_Collision::NotifyEnd(USkeletalMeshComponent* MeshComp, UAnimSequenceBase* Animation)

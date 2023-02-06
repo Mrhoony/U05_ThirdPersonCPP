@@ -55,10 +55,15 @@ public:
 	void SetOneHandMode();
 	void SetTwoHandMode();
 	void SetWarpMode();
-	void SetMagicMode();
+	void SetMagicBallMode();
 	void SetStormMode();
 
 	void DoAction();
+	void DoOnAim();
+	void DoOffAim();
+	void Dead();
+	void End_Dead();
+	void OffAllCollisions();
 
 public:
 	UPROPERTY(BlueprintAssignable)

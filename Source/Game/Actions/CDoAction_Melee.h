@@ -21,6 +21,7 @@ public:
 	FORCEINLINE void EnableCombo() { bCanCombo = true; }
 	FORCEINLINE void DisableCombo() { bCanCombo = false; }
 	FORCEINLINE void ClearHittedCharacters() { HittedCharacters.Empty(); }
+	FString GetSpecificCollisionName() { return Datas[ComboCount].SpecificCollisionName; }
 
 private:
 	UFUNCTION()

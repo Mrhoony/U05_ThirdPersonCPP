@@ -67,10 +67,19 @@ void ACAttachment::OnComponentEndOverlap(UPrimitiveComponent* OverlappedComponen
 
 void ACAttachment::OnCollisions(FString InCollisionName)
 {
-	for (UShapeComponent* shape : ShapeComponents)
+	if (InCollisionName.Compare("None") == 0)
 	{
-		shape->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		for (UShapeComponent* shape : ShapeComponents)
+			shape->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
 	}
+	else
+	{
+		for (UShapeComponent* shape : ShapeComponents)
+		{
+			if(shape->GetName().Contains(InCollisionName) == true)
+				shape->SetCollisionEnabled(ECollisionEnabled::QueryAndPhysics);
+		}
+	}	
 }
 
 void ACAttachment::OffCollisions()

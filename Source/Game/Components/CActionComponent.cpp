@@ -1,8 +1,11 @@
 #include "CActionComponent.h"
 #include "Global.h"
+
 #include "Actions/CActionData.h"
 #include "Actions/CEquipment.h"
 #include "Actions/CDoAction.h"
+#include "Actions/CAttachment.h"
+
 #include "GameFramework/Character.h"
 
 UCActionComponent::UCActionComponent()
@@ -54,7 +57,7 @@ void UCActionComponent::SetWarpMode()
 	SetMode(EActionType::Warp);
 }
 
-void UCActionComponent::SetMagicMode()
+void UCActionComponent::SetMagicBallMode()
 {
 	SetMode(EActionType::MagicBall);
 }
@@ -74,6 +77,26 @@ void UCActionComponent::DoAction()
 
 		if(doAction != nullptr)
 			doAction->DoAction();
+	}
+}
+
+void UCActionComponent::DoOnAim()
+{
+	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetDoAction() != nullptr)
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+
+		action->OnAim();
+	}
+}
+
+void UCActionComponent::DoOffAim()
+{
+	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetDoAction() != nullptr)
+	{
+		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+
+		action->OffAim();
 	}
 }
 
@@ -106,4 +129,28 @@ void UCActionComponent::ChangeType(EActionType InNewType)
 
 	if (OnActionTypeChanged.IsBound())
 		OnActionTypeChanged.Broadcast(prevType, InNewType);
+}
+
+void UCActionComponent::Dead()
+{
+	OffAllCollisions();
+}
+
+void UCActionComponent::End_Dead()
+{
+	//TODO: All Attachment, Equipment, DoAction Release from Memory
+}
+
+void UCActionComponent::OffAllCollisions()
+{
+	for (const auto data : Datas)
+	{
+		if (data == nullptr)
+			continue;
+
+		if (data->GetAttachment() == nullptr)
+			continue;
+
+		data->GetAttachment()->OffCollisions();
+	}
 }
