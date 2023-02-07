@@ -54,6 +54,9 @@ public:
 		TSubclassOf<class UCameraShake> ShakeClass;
 
 	UPROPERTY(EditAnywhere)
+		TSubclassOf<class ACThrow> ThrowClass;
+
+	UPROPERTY(EditAnywhere)
 		FString SpecificCollisionName = "None";
 };
 
