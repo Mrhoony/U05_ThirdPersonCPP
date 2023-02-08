@@ -2,6 +2,8 @@
 #include "Global.h"
 
 #include "Actions/CActionData.h"
+#include "Actions/CActionObject.h"
+
 #include "Actions/CEquipment.h"
 #include "Actions/CDoAction.h"
 #include "Actions/CAttachment.h"

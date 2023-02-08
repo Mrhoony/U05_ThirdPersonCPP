@@ -46,8 +46,10 @@ private:
 	UPROPERTY(VisibleDefaultsOnly)
 		class UWidgetComponent* HealthWidget;
 
+protected:
+	UPROPERTY(BlueprintReadOnly, VisibleDefaultsOnly) class UCActionComponent* Action;
+
 private:
-	UPROPERTY(VisibleDefaultsOnly) class UCActionComponent* Action;
 	UPROPERTY(VisibleDefaultsOnly) class UCMontagesComponent* Montages;	
 	UPROPERTY(VisibleDefaultsOnly) class UCStateComponent* State;	
 	UPROPERTY(VisibleDefaultsOnly) class UCStatusComponent* Status;

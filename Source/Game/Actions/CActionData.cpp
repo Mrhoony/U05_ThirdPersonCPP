@@ -5,9 +5,11 @@
 #include "CDoAction.h"
 #include "GameFramework/Character.h"
 
-void UCActionData::BeginPlay(ACharacter* InOnwerCharacter)
+void UCActionData::BeginPlay(ACharacter* InOnwerCharacter, UCActionObject** OutObject)
 {
 	FTransform transform;
+
+	ACAttachment* Attachment = nullptr;
 
 	if (AttachmentClass != nullptr)
 	{
@@ -15,6 +17,8 @@ void UCActionData::BeginPlay(ACharacter* InOnwerCharacter)
 		Attachment->SetActorLabel(GetLabelName(InOnwerCharacter, "Attachment"));
 		UGameplayStatics::FinishSpawningActor(Attachment, transform);
 	}
+	
+	ACEquipment* Equipment = nullptr;
 
 	if (EquipmentClass != nullptr)
 	{
@@ -31,6 +35,8 @@ void UCActionData::BeginPlay(ACharacter* InOnwerCharacter)
 			Equipment->OnUnequipmentDelegate.AddDynamic(Attachment, &ACAttachment::OnUnequip);
 		}
 	}
+
+	ACDoAction* DoAction = nullptr;
 
 	if (DoActionClass != nullptr)
 	{
@@ -51,6 +57,12 @@ void UCActionData::BeginPlay(ACharacter* InOnwerCharacter)
 			DoAction->SetEquipped(Equipment->IsEquipped());
 		}
 	}
+
+	*OutObject = NewObject<UCActionObject>();
+	(*OutObject)->Attachment = Attachment;
+	(*OutObject)->Equipment = Equipment;
+	(*OutObject)->DoAction = DoAction;
+	(*OutObject)->EquipmentColor = EquipmentColor;
 }
 
 FString UCActionData::GetLabelName(ACharacter* InOnwerCharacter, FString InMiddleName)

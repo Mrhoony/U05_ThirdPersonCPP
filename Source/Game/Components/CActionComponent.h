@@ -50,13 +50,13 @@ public:
 		FORCEINLINE bool IsStormBallMode() { return Type == EActionType::Storm; }
 
 public:
-	void SetUnaremdMode();
-	void SetFistMode();
-	void SetOneHandMode();
-	void SetTwoHandMode();
-	void SetWarpMode();
-	void SetMagicBallMode();
-	void SetStormMode();
+	UFUNCTION(BlueprintCallable) void SetUnaremdMode();
+	UFUNCTION(BlueprintCallable) void SetFistMode();
+	UFUNCTION(BlueprintCallable) void SetOneHandMode();
+	UFUNCTION(BlueprintCallable) void SetTwoHandMode();
+	UFUNCTION(BlueprintCallable) void SetWarpMode();
+	UFUNCTION(BlueprintCallable) void SetMagicBallMode();
+	UFUNCTION(BlueprintCallable) void SetStormMode();
 
 	void DoAction();
 	void DoOnAim();
@@ -75,7 +75,10 @@ private:
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-		class UCActionData* Datas[(int32)EActionType::Max];
+		class UCActionData* Datas[(int32)EActionType::Max]; // DataAsset
+
+	UPROPERTY()
+		class UCActionObject* DataObjects[(int32)EActionType::Max];
 
 private:
 	EActionType Type;

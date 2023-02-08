@@ -100,7 +100,7 @@ void ACEnemy::BeginPlay()
 	if (healthWidgetObject != nullptr)
 		healthWidgetObject->Update(Status->GetHealth(), Status->GetMaxHealth());
 
-	Action->SetUnaremdMode();
+	//Action->SetUnaremdMode();
 }
 
 void ACEnemy::ChangeColor(FLinearColor InColor)
