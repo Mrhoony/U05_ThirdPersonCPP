@@ -106,6 +106,7 @@ void ACPlayer::SetupPlayerInputComponent(UInputComponent* PlayerInputComponent)
 	PlayerInputComponent->BindAction("OneHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnOneHand);
 	PlayerInputComponent->BindAction("TwoHand", EInputEvent::IE_Pressed, this, &ACPlayer::OnTwoHand);
 	PlayerInputComponent->BindAction("MagicBall", EInputEvent::IE_Pressed, this, &ACPlayer::OnMagicBall);
+	PlayerInputComponent->BindAction("Warp", EInputEvent::IE_Pressed, this, &ACPlayer::OnWarp);
 		
 	PlayerInputComponent->BindAction("Action", EInputEvent::IE_Pressed, this, &ACPlayer::OnDoAction);
 	
@@ -165,15 +166,8 @@ void ACPlayer::OnEvade()
 	State->SetRollMode();
 }
 
-void ACPlayer::OnWalk()
-{
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetWalkSpeed();
-}
-
-void ACPlayer::OffWalk()
-{
-	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();
-}
+void ACPlayer::OnWalk() { GetCharacterMovement()->MaxWalkSpeed = Status->GetWalkSpeed(); }
+void ACPlayer::OffWalk(){	GetCharacterMovement()->MaxWalkSpeed = Status->GetRunSpeed();}
 
 void ACPlayer::OnFist()
 {
@@ -196,25 +190,13 @@ void ACPlayer::OnTwoHand()
 	Action->SetTwoHandMode();
 }
 
-void ACPlayer::OnMagicBall()
-{
-	Action->SetMagicBallMode();
-}
+void ACPlayer::OnMagicBall() { Action->SetMagicBallMode(); }
+void ACPlayer::OnWarp() { Action->SetWarpMode(); }
 
-void ACPlayer::OnDoAction()
-{
-	Action->DoAction();
-}
+void ACPlayer::OnDoAction() { Action->DoAction(); }
 
-void ACPlayer::OnAim()
-{
-	Action->DoOnAim();
-}
-
-void ACPlayer::OffAim()
-{
-	Action->DoOffAim();
-}
+void ACPlayer::OnAim(){	Action->DoOnAim();}
+void ACPlayer::OffAim(){	Action->DoOffAim();}
 
 void ACPlayer::Begin_Roll()
 {
@@ -255,7 +237,6 @@ void ACPlayer::End_BackStep()
 		GetCharacterMovement()->bOrientRotationToMovement = true;
 	}
 	
-
 	State->SetIdleMode();
 }
 
