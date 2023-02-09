@@ -12,7 +12,7 @@ UCLASS()
 class GAME_API ACEquipment : public AActor
 {
 	GENERATED_BODY()
-	
+
 public:	
 	ACEquipment();
 

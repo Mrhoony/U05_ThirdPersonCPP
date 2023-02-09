@@ -25,7 +25,7 @@ protected:
 
 public:
 	UFUNCTION(BlueprintPure)
-		FORCEINLINE class UCActionData* GetCurrent() { return Datas[(int32)Type]; }
+		FORCEINLINE class UCActionObject* GetCurrent() { return DataObjects[(int32)Type]; }
 
 public:
 	UFUNCTION(BlueprintPure)
@@ -75,10 +75,10 @@ private:
 
 private:
 	UPROPERTY(EditDefaultsOnly)
-		class UCActionData* Datas[(int32)EActionType::Max]; // DataAsset
+		class UCActionData* Datas[(int32)EActionType::Max]; // DataAsset (to Spawn)
 
 	UPROPERTY()
-		class UCActionObject* DataObjects[(int32)EActionType::Max];
+		class UCActionObject* DataObjects[(int32)EActionType::Max]; // Spawned Objects
 
 private:
 	EActionType Type;

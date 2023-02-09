@@ -91,9 +91,13 @@ void ACEnemy::BeginPlay()
 
 	// Widget Property Settings
 	NameWidget->InitWidget();
+	
 	UCUserWidget_Name* nameWidgetObject = Cast<UCUserWidget_Name>(NameWidget->GetUserWidgetObject());
 	if (nameWidgetObject != nullptr)
+	{
 		nameWidgetObject->SetPawnName(GetName());
+		nameWidgetObject->SetControllerName(GetController()->GetName());
+	}
 
 	HealthWidget->InitWidget();
 	UCUserWidget_Health* healthWidgetObject = Cast<UCUserWidget_Health>(HealthWidget->GetUserWidgetObject());

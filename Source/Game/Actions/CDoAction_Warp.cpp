@@ -30,7 +30,6 @@ void ACDoAction_Warp::BeginPlay()
 
 void ACDoAction_Warp::DoAction()
 {
-	CheckFalse(*bEquipped);
 	CheckFalse(State->IsIdleMode());
 
 	FRotator rotation;

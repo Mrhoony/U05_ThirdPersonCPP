@@ -22,60 +22,33 @@ void UCActionComponent::BeginPlay()
 
 	for (int32 i = 0; i < (int32)EActionType::Max; i++)
 	{
-		if (!!Datas[i])
-			Datas[i]->BeginPlay(character);
-	}
-	
+		if (Datas[i] != nullptr)
+			Datas[i]->BeginPlay(character, &DataObjects[i]);
+	}	
 }
 
 void UCActionComponent::SetUnaremdMode()
 {
+	if (!!DataObjects[(int32)Type] && DataObjects[(int32)Type]->GetEquipment())
+		DataObjects[(int32)Type]->GetEquipment()->Unequip();
 
-	if (!!Datas[(int32)Type] && Datas[(int32)Type]->GetEquipment())
-		Datas[(int32)Type]->GetEquipment()->Unequip();
-
-	Datas[(int32)EActionType::Unarmed]->GetEquipment()->Equip();
+	DataObjects[(int32)EActionType::Unarmed]->GetEquipment()->Equip();
 
 	ChangeType(EActionType::Unarmed);
 }
 
-void UCActionComponent::SetFistMode()
-{
-	SetMode(EActionType::Fist);
-}
+void UCActionComponent::SetFistMode(){	SetMode(EActionType::Fist);}
+void UCActionComponent::SetOneHandMode(){	SetMode(EActionType::OneHand);}
+void UCActionComponent::SetTwoHandMode(){	SetMode(EActionType::TwoHand);}
+void UCActionComponent::SetWarpMode(){	SetMode(EActionType::Warp);}
+void UCActionComponent::SetMagicBallMode(){	SetMode(EActionType::MagicBall);}
+void UCActionComponent::SetStormMode(){	SetMode(EActionType::Storm);}
 
-void UCActionComponent::SetOneHandMode()
-{
-	SetMode(EActionType::OneHand);
-}
+void UCActionComponent::DoAction(){	CheckTrue(IsUnaremdMode());
 
-void UCActionComponent::SetTwoHandMode()
-{
-	SetMode(EActionType::TwoHand);
-}
-
-void UCActionComponent::SetWarpMode()
-{
-	SetMode(EActionType::Warp);
-}
-
-void UCActionComponent::SetMagicBallMode()
-{
-	SetMode(EActionType::MagicBall);
-}
-
-void UCActionComponent::SetStormMode()
-{
-	SetMode(EActionType::Storm);
-}
-
-void UCActionComponent::DoAction()
-{
-	CheckTrue(IsUnaremdMode());
-
-	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetDoAction())
+if (DataObjects[(int32)Type] != nullptr && DataObjects[(int32)Type]->GetDoAction())
 	{
-		ACDoAction* doAction = Datas[(int32)Type]->GetDoAction();
+		ACDoAction* doAction = DataObjects[(int32)Type]->GetDoAction();
 
 		if(doAction != nullptr)
 			doAction->DoAction();
@@ -84,9 +57,9 @@ void UCActionComponent::DoAction()
 
 void UCActionComponent::DoOnAim()
 {
-	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetDoAction() != nullptr)
+	if (DataObjects[(int32)Type] != nullptr && DataObjects[(int32)Type]->GetDoAction() != nullptr)
 	{
-		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+		ACDoAction* action = DataObjects[(int32)Type]->GetDoAction();
 
 		action->OnAim();
 	}
@@ -94,9 +67,9 @@ void UCActionComponent::DoOnAim()
 
 void UCActionComponent::DoOffAim()
 {
-	if (Datas[(int32)Type] != nullptr && Datas[(int32)Type]->GetDoAction() != nullptr)
+	if (DataObjects[(int32)Type] != nullptr && DataObjects[(int32)Type]->GetDoAction() != nullptr)
 	{
-		ACDoAction* action = Datas[(int32)Type]->GetDoAction();
+		ACDoAction* action = DataObjects[(int32)Type]->GetDoAction();
 
 		action->OffAim();
 	}
@@ -111,12 +84,12 @@ void UCActionComponent::SetMode(EActionType InNewType)
 	}
 	else if (IsUnaremdMode() == false)
 	{
-		if (!!Datas[(int32)Type] && Datas[(int32)Type]->GetEquipment())
-			Datas[(int32)Type]->GetEquipment()->Unequip();
+		if (!!DataObjects[(int32)Type] && DataObjects[(int32)Type]->GetEquipment())
+			DataObjects[(int32)Type]->GetEquipment()->Unequip();
 	}
 
-	if (!!Datas[(int32)InNewType] && Datas[(int32)InNewType]->GetEquipment())
-		Datas[(int32)InNewType]->GetEquipment()->Equip();
+	if (!!DataObjects[(int32)InNewType] && DataObjects[(int32)InNewType]->GetEquipment())
+		DataObjects[(int32)InNewType]->GetEquipment()->Equip();
 
 	ChangeType(InNewType);
 	//Todo. 노티파이
@@ -129,17 +102,11 @@ void UCActionComponent::ChangeType(EActionType InNewType)
 	EActionType  prevType = Type;
 	Type = InNewType;
 
-	
-
 	if (OnActionTypeChanged.IsBound())
 		OnActionTypeChanged.Broadcast(prevType, InNewType);
 }
 
-void UCActionComponent::Dead()
-{
-	OffAllCollisions();
-}
-
+void UCActionComponent::Dead(){	OffAllCollisions();}
 void UCActionComponent::End_Dead()
 {
 	//TODO: All Attachment, Equipment, DoAction Release from Memory
@@ -147,7 +114,7 @@ void UCActionComponent::End_Dead()
 
 void UCActionComponent::OffAllCollisions()
 {
-	for (const auto data : Datas)
+	for (UCActionObject* data : DataObjects)
 	{
 		if (data == nullptr)
 			continue;
