@@ -14,7 +14,8 @@ public class Game : ModuleRules
 			"CoreUObject",
 			"Engine",
 			"InputCore",
-			"AIModule"
+			"AIModule",
+			"GameplayTasks"
 		});
 
 		PublicIncludePaths.Add(ModuleDirectory);

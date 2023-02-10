@@ -19,15 +19,19 @@ protected:
 	virtual void OnUnPossess() override;
 
 private:
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCBehaviorComponent* Behavior;
+	UFUNCTION()
+		void OnPerceptionUpdated(const TArray<AActor*>& UpdatedActors);
 
-	UPROPERTY(VisibleDefaultsOnly)
-		class UAIPerceptionComponent* Perception;
+public:
+	float GetSightRadius();
+	FORCEINLINE float GetBehaviorRange() { return BehaviorRange; }
+
+private:
+	UPROPERTY(VisibleDefaultsOnly) class UCBehaviorComponent* Behavior;
+	UPROPERTY(VisibleDefaultsOnly) class UAIPerceptionComponent* Perception;	
+	UPROPERTY(EditAnywhere) float BehaviorRange = 150.f;
 
 private:
 	class ACEnemy_AI* OwnerEnemy;
-
-private:
 	class UAISenseConfig_Sight* Sight;
 };
