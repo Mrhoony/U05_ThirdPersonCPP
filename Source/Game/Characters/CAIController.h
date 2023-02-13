@@ -30,6 +30,8 @@ private:
 	UPROPERTY(VisibleDefaultsOnly) class UCBehaviorComponent* Behavior;
 	UPROPERTY(VisibleDefaultsOnly) class UAIPerceptionComponent* Perception;	
 	UPROPERTY(EditAnywhere) float BehaviorRange = 150.f;
+	UPROPERTY(EditAnywhere) bool bDrawDebug = true;
+	UPROPERTY(EditAnywhere) float InitHeight = 50.f;
 
 private:
 	class ACEnemy_AI* OwnerEnemy;

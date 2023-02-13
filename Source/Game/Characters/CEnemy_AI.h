@@ -17,6 +17,10 @@ public:
 	FORCEINLINE uint8 GetTeamID() { return TeamID; }
 
 private:
+	UPROPERTY(VisibleDefaultsOnly)
+		class UCPatrolComponent* Patrol;
+
+private:
 	UPROPERTY(EditDefaultsOnly, Category = "AI")
 		class UBehaviorTree* BehaviorTree;
 

@@ -24,8 +24,8 @@ void ACDoAction_Throw::DoAction()
 {
 	Super::DoAction();
 
-	CheckFalse(Aim->IsAvaliable());
-	CheckFalse(Aim->IsZooming());
+	if(Aim->IsAvaliable())
+		CheckFalse(Aim->IsZooming());
 	CheckFalse(State->IsIdleMode());
 
 	State->SetActionMode();
