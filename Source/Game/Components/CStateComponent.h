@@ -51,4 +51,3 @@ public:
 private:
 	EStateType Type;
 };
-

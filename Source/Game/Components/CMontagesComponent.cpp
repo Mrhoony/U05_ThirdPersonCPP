@@ -4,9 +4,7 @@
 
 UCMontagesComponent::UCMontagesComponent()
 {
-
 }
-
 
 void UCMontagesComponent::BeginPlay()
 {

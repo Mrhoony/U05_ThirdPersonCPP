@@ -111,13 +111,13 @@ void UCActionComponent::End_Dead()
 {
 	for (int32 i = 0; i < (int32)EActionType::Max; i++)
 	{
-		if (DataObjects != nullptr && DataObjects[i]->GetAttachment())
+		if (DataObjects[i] != nullptr && DataObjects[i]->GetAttachment() != nullptr)
 			DataObjects[i]->GetAttachment()->Destroy();
 
-		if (DataObjects != nullptr && DataObjects[i]->GetEquipment())
+		if (DataObjects[i] != nullptr && DataObjects[i]->GetEquipment() != nullptr)
 			DataObjects[i]->GetEquipment()->Destroy();
 
-		if (DataObjects != nullptr && DataObjects[i]->GetDoAction())
+		if (DataObjects[i] != nullptr && DataObjects[i]->GetDoAction() != nullptr)
 			DataObjects[i]->GetDoAction()->Destroy();
 	}
 }
