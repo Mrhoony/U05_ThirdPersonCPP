@@ -84,6 +84,9 @@ public:
 
 	virtual void ChangeColor(FLinearColor InColor);
 
+	void Hitted() override;
+	void Dead() override;
+
 private:
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);

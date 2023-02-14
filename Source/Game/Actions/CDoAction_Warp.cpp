@@ -4,12 +4,15 @@
 #include "Components/CStateComponent.h"
 #include "Components/CStatusComponent.h"
 #include "Actions/CAttachment.h"
+#include "Components/CBehaviorComponent.h"
+#include "Characters/CPlayer.h"
 
 #include "GameFramework/Character.h"
 #include "Components/DecalComponent.h"
 #include "Components/SkeletalMeshComponent.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
+#include "AIController.h"
 
 void ACDoAction_Warp::BeginPlay()
 {
@@ -30,10 +33,25 @@ void ACDoAction_Warp::BeginPlay()
 
 void ACDoAction_Warp::DoAction()
 {
+	CheckFalse(*bEquipped);
 	CheckFalse(State->IsIdleMode());
 
-	FRotator rotation;
-	CheckFalse(GetCursorLocationAndRotation(Location, rotation));
+	bool bPlayer = OwnerCharacter->GetController<APlayerController>() != nullptr;
+	if (bPlayer)
+	{
+		FRotator rotation;
+		CheckFalse(GetCursorLocationAndRotation(Location, rotation));
+	}
+	else
+	{
+		AAIController* controller = OwnerCharacter->GetController<AAIController>();
+		UCBehaviorComponent* behavior = CHelpers::GetComponent<UCBehaviorComponent>(controller);
+		Location = behavior->GetWarpLocation();
+		
+		Decal->SetVisibility(false);
+		SkelMesh->SetVisibility(false);
+		StaticMesh->SetVisibility(false);
+	}
 
 	State->SetActionMode();
 	OwnerCharacter->PlayAnimMontage(Datas[0].AnimMontage, Datas[0].PlayRate, Datas[0].StartSection);
@@ -70,9 +88,12 @@ void ACDoAction_Warp::Tick(float DeltaTime)
 	Super::Tick(DeltaTime);
 
 	CheckFalse(*bEquipped);
+	ACPlayer* player = Cast<ACPlayer>(OwnerCharacter);
+	CheckNull(player);
 
 	FVector location;
 	FRotator rotation;
+
 	if (GetCursorLocationAndRotation(location, rotation) == true)
 	{
 		FRotator ownerRotator = OwnerCharacter->GetController<APlayerController>()->GetControlRotation();

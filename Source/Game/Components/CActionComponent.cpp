@@ -109,7 +109,17 @@ void UCActionComponent::ChangeType(EActionType InNewType)
 void UCActionComponent::Dead(){	OffAllCollisions();}
 void UCActionComponent::End_Dead()
 {
-	//TODO: All Attachment, Equipment, DoAction Release from Memory
+	for (int32 i = 0; i < (int32)EActionType::Max; i++)
+	{
+		if (DataObjects != nullptr && DataObjects[i]->GetAttachment())
+			DataObjects[i]->GetAttachment()->Destroy();
+
+		if (DataObjects != nullptr && DataObjects[i]->GetEquipment())
+			DataObjects[i]->GetEquipment()->Destroy();
+
+		if (DataObjects != nullptr && DataObjects[i]->GetDoAction())
+			DataObjects[i]->GetDoAction()->Destroy();
+	}
 }
 
 void UCActionComponent::OffAllCollisions()

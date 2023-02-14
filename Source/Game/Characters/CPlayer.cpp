@@ -249,3 +249,11 @@ void ACPlayer::ChangeColor(FLinearColor InColor)
 	BodyMaterial->SetVectorParameterValue("BodyColor", InColor);
 	LogoMaterial->SetVectorParameterValue("BodyColor", InColor);
 }
+
+void ACPlayer::Hitted()
+{
+}
+
+void ACPlayer::Dead()
+{
+}

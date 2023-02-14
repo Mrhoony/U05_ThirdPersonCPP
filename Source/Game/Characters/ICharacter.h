@@ -17,4 +17,6 @@ class GAME_API IICharacter
 
 public:
 	virtual void ChangeColor(FLinearColor InColor) = 0;
+	virtual void Hitted() = 0;
+	virtual void Dead() = 0;
 };

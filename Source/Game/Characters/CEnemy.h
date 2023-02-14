@@ -4,6 +4,7 @@
 #include "GameFramework/Character.h"
 #include "ICharacter.h"
 #include "Components/CStateComponent.h"
+#include "Components/SlateWrapperTypes.h"
 #include "CEnemy.generated.h"
 
 UCLASS()
@@ -24,8 +25,8 @@ private:
 	UFUNCTION()
 		void RestoreLogoColor();
 
-	void Hitted();
-	void Dead();
+	void Hitted() override;
+	void Dead() override;
 
 	UFUNCTION()
 		void End_Dead();
@@ -34,6 +35,9 @@ protected:
 	virtual void BeginPlay() override;
 
 private:
+	UPROPERTY(EditAnywhere)
+		ESlateVisibility VisibleType = ESlateVisibility::Hidden;
+
 	UPROPERTY(EditAnywhere)
 		float LaunchValue = 25.f;
 
