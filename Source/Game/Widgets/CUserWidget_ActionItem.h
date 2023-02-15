@@ -8,7 +8,7 @@ UCLASS()
 class GAME_API UCUserWidget_ActionItem : public UUserWidget
 {
 	GENERATED_BODY()
-	
+
 protected:
 	UFUNCTION(BlueprintCallable)
 		void Pressed();

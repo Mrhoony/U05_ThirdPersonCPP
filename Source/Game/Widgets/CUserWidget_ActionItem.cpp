@@ -20,10 +20,8 @@ void UCUserWidget_ActionItem::Unhover()
 
 UCUserWidget_ActionContainer* UCUserWidget_ActionItem::GetActionContainer()
 {
-	ACPlayer* player = Cast<ACPlayer>(UGameplayStatics::GetPlayerController(GetWorld(), 0));
+	ACPlayer* player = Cast<ACPlayer>(UGameplayStatics::GetPlayerCharacter(GetWorld(), 0));
 	CheckNullResult(player, nullptr);
-
-	CLog::Log(player->GetActionContainerWidget() == nullptr ? "Null" : "Not");
 
 	return player->GetActionContainerWidget();
 }

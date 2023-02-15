@@ -20,30 +20,22 @@ void UCUserWidget_ActionContainer::NativeConstruct()
 
 void UCUserWidget_ActionContainer::Pressed(FString InName)
 {
-
 }
 
 void UCUserWidget_ActionContainer::Hover(FString InName)
 {
-	//CLog::Print(Items.Num());
-	//for (auto item : Items)
-	//{
-	//	CLog::Print(item.Key);
-	//	CLog::Print(item.Value == nullptr ? "Null" : "Not Null");
-	//}
-
-	/*UBorder* border = Cast<UBorder>(Items[InName]->GetWidgetFromName("ItemBorder"));
+	UBorder* border = Cast<UBorder>(Items[InName]->GetWidgetFromName("ItemBorder"));
 	if (border != nullptr)
 	{
-		border->SetBrushColor(FLinearColor::White);
-	}*/
+		border->SetBrushColor(FLinearColor::Red);
+	}
 }
 
 void UCUserWidget_ActionContainer::Unhover(FString InName)
 {
-	//UBorder* border = Cast<UBorder>(Items[InName]->GetWidgetFromName("ItemBorder"));
-	//if (border != nullptr)
-	//{
-	//	border->SetBrushColor(FLinearColor::Red);
-	//}
+	UBorder* border = Cast<UBorder>(Items[InName]->GetWidgetFromName("ItemBorder"));
+	if (border != nullptr)
+	{
+		border->SetBrushColor(FLinearColor::White);
+	}
 }
