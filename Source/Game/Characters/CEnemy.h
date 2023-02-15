@@ -29,7 +29,7 @@ private:
 	void Dead() override;
 
 	UFUNCTION()
-		void End_Dead();
+		void End_Dead() override;
 
 protected:
 	virtual void BeginPlay() override;

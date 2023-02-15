@@ -19,4 +19,5 @@ public:
 	virtual void ChangeColor(FLinearColor InColor) = 0;
 	virtual void Hitted() = 0;
 	virtual void Dead() = 0;
+	virtual void End_Dead() = 0;
 };

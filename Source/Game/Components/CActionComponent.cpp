@@ -135,3 +135,14 @@ void UCActionComponent::OffAllCollisions()
 		data->GetAttachment()->OffCollisions();
 	}
 }
+
+void UCActionComponent::AbortByDamaged()
+{
+	CheckNull(DataObjects[(int32)Type]);
+	CheckTrue(IsUnaremdMode());
+
+	DataObjects[(int32)Type]->GetEquipment()->Begin_Equip();
+	DataObjects[(int32)Type]->GetEquipment()->End_Equip();
+
+	DataObjects[(int32)Type]->GetDoAction()->Abort();
+}

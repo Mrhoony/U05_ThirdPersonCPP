@@ -18,29 +18,7 @@ class GAME_API ACPlayer : public ACharacter, public IICharacter, public IGeneric
 public:
 	ACPlayer();
 
-private:
-	//SceneComponent
-	UPROPERTY(VisibleDefaultsOnly)
-		class USpringArmComponent* SpringArm;
 
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCameraComponent* Camera;
-
-	//ActorComponent
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCStatusComponent* Status;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCOptionComponent* Option;
-	
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCStateComponent* State;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCMontagesComponent* Montages;
-
-	UPROPERTY(VisibleDefaultsOnly)
-		class UCActionComponent* Action;
 
 protected:
 	virtual void BeginPlay() override;
@@ -49,6 +27,20 @@ public:
 	virtual void Tick(float DeltaTime) override;
 	virtual void SetupPlayerInputComponent(class UInputComponent* PlayerInputComponent) override;
 	FGenericTeamId GetGenericTeamId() const override;
+
+	FORCEINLINE class UCUserWidget_ActionContainer* GetActionContainerWidget() { return ActionContainerWidget; }
+
+public:
+	void End_Roll();
+	void End_BackStep();
+
+	virtual void ChangeColor(FLinearColor InColor);
+
+public:
+	virtual float TakeDamage(float Damage, FDamageEvent const& DamageEvent, AController* EventInstigator, AActor* DamageCauser) override;
+	virtual void Hitted() override;
+	virtual void Dead() override;
+	virtual void End_Dead() override;
 
 private:
 	//Axis Mapping
@@ -78,15 +70,6 @@ private:
 	void Begin_Roll();
 	void Begin_BackStep();
 
-public:
-	void End_Roll();
-	void End_BackStep();
-
-	virtual void ChangeColor(FLinearColor InColor);
-
-	void Hitted() override;
-	void Dead() override;
-
 private:
 	UFUNCTION()
 		void OnStateTypeChanged(EStateType InPrevType, EStateType InNewType);
@@ -94,7 +77,28 @@ private:
 	UPROPERTY(EditDefaultsOnly)
 		uint8 TeamID = 0;
 
+	UPROPERTY(EditDefaultsOnly)
+		TSubclassOf<class UCUserWidget_ActionContainer> ActionContainerWidgetClass;
+
+private:
+	//SceneComponent
+	UPROPERTY(VisibleDefaultsOnly)		class USpringArmComponent* SpringArm;
+	UPROPERTY(VisibleDefaultsOnly)		class UCameraComponent* Camera;
+
+	//ActorComponent
+	UPROPERTY(VisibleDefaultsOnly)		class UCStatusComponent* Status;
+	UPROPERTY(VisibleDefaultsOnly)		class UCOptionComponent* Option;
+	UPROPERTY(VisibleDefaultsOnly)		class UCStateComponent* State;
+	UPROPERTY(VisibleDefaultsOnly)		class UCMontagesComponent* Montages;
+	UPROPERTY(VisibleDefaultsOnly)		class UCActionComponent* Action;
+
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
 	class UMaterialInstanceDynamic* LogoMaterial;
+
+	class ACharacter* Attacker;
+	class AActor* Causer;
+	float DamageValue;
+
+	class UCUserWidget_ActionContainer* ActionContainerWidget;
 };

@@ -137,6 +137,8 @@ float ACEnemy::TakeDamage(float Damage, FDamageEvent const& DamageEvent, AContro
 
 	CLog::Print(DamageValue, -1, 1.0f);
 
+	Action->AbortByDamaged();
+
 	Status->DecreaseHealth(DamageValue);
 
 	if (Status->GetHealth() <= 0.f)
@@ -159,6 +161,7 @@ void ACEnemy::Hitted()
 
 	// Play Hit Montage
 	Montages->PlayHitted();
+	Status->SetMove();
 	
 	// Launch HitBack
 	FVector start = GetActorLocation();
