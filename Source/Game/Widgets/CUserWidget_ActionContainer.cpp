@@ -20,6 +20,13 @@ void UCUserWidget_ActionContainer::NativeConstruct()
 
 void UCUserWidget_ActionContainer::Pressed(FString InName)
 {
+	if (Items[InName]->OnActionItemSelected.IsBound())
+		Items[InName]->OnActionItemSelected.Broadcast();
+
+	SetVisibility(ESlateVisibility::Hidden);
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->bShowMouseCursor = false;
+	UGameplayStatics::GetPlayerController(GetWorld(), 0)->SetInputMode(FInputModeGameOnly());
+	UGameplayStatics::SetGlobalTimeDilation(GetWorld(), 1.0f);
 }
 
 void UCUserWidget_ActionContainer::Hover(FString InName)

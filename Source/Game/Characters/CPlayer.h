@@ -18,8 +18,6 @@ class GAME_API ACPlayer : public ACharacter, public IICharacter, public IGeneric
 public:
 	ACPlayer();
 
-
-
 protected:
 	virtual void BeginPlay() override;
 
@@ -43,6 +41,14 @@ public:
 	virtual void End_Dead() override;
 
 private:
+	UFUNCTION() void OnFist();
+	UFUNCTION() void OnOneHand();
+	UFUNCTION() void OnTwoHand();
+	UFUNCTION() void OnMagicBall();
+	UFUNCTION() void OnWarp();
+	UFUNCTION() void OnStorm();
+
+private:
 	//Axis Mapping
 	void OnMoveForward(float InAxis);
 	void OnMoveRight(float InAxis);
@@ -55,20 +61,19 @@ private:
 	void OnWalk();
 	void OffWalk();
 
-	void OnFist();
-	void OnOneHand();
-	void OnTwoHand();
-	void OnMagicBall();
-	void OnWarp();
-
 	void OnDoAction();
 
 	void OnAim();
 	void OffAim();
 
+	void OnActionSwitch();
+	void OffActionSwitch();
+
 private:
 	void Begin_Roll();
 	void Begin_BackStep();
+
+	void BindActionItem();
 
 private:
 	UFUNCTION()
