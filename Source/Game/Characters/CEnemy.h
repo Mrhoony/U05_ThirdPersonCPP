@@ -57,6 +57,7 @@ private:
 	UPROPERTY(VisibleDefaultsOnly) class UCMontagesComponent* Montages;	
 	UPROPERTY(VisibleDefaultsOnly) class UCStateComponent* State;	
 	UPROPERTY(VisibleDefaultsOnly) class UCStatusComponent* Status;
+	UPROPERTY(VisibleDefaultsOnly) class UCDissolveComponent* Dissolve;
 
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;

@@ -8,6 +8,7 @@
 #include "Components/CStateComponent.h"
 #include "Widgets/CUserWidget_Name.h"
 #include "Widgets/CUserWidget_Health.h"
+#include "Components/CDissolveComponent.h"
 
 #include "Materials/MaterialInstanceConstant.h"
 #include "Materials/MaterialInstanceDynamic.h"
@@ -28,6 +29,7 @@ ACEnemy::ACEnemy()
 	CHelpers::CreateActorComponent(this, &Montages, "Montages");
 	CHelpers::CreateActorComponent(this, &Status, "Status");
 	CHelpers::CreateActorComponent(this, &State, "State");
+	CHelpers::CreateActorComponent(this, &Dissolve, "Dissolve");
 
 	// Component Settings
 	TSubclassOf<UCUserWidget_Name> nameWidgetClass;
@@ -123,6 +125,8 @@ void ACEnemy::ChangeColor(FLinearColor InColor)
 
 void ACEnemy::RestoreLogoColor()
 {
+	CheckTrue(State->IsDeadMode());
+
 	FLinearColor color = Action->GetCurrent()->GetEquipmentColor();
 
 	LogoMaterial->SetVectorParameterValue("LogoLightColor", color);
@@ -187,6 +191,9 @@ void ACEnemy::Dead()
 	// All Weapon Collision Disable
 	Action->Dead();
 
+	// Play Dissolve
+	Dissolve->Play();
+
 	// Ragdoll
 	GetCapsuleComponent()->SetCollisionEnabled(ECollisionEnabled::NoCollision);
 	GetMesh()->GlobalAnimRateScale = 0.f;
@@ -205,6 +212,7 @@ void ACEnemy::Dead()
 
 void ACEnemy::End_Dead()
 {
+	Dissolve->Stop();
 	Action->End_Dead();
 	Destroy();
 }
