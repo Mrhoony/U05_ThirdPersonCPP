@@ -79,4 +79,5 @@ void ACCameraActor::OnFinish()
 	CheckNull(player);
 
 	controller->SetViewTarget(player);
+	PrintLine();
 }

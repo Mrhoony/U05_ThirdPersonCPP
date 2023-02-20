@@ -37,6 +37,8 @@ private:
 		float PlayRate = 0.2f;
 
 private:
-	class UMaterialInstanceDynamic* DynamicMaterial;
+	UPROPERTY()
+		class UMaterialInstanceDynamic* DynamicMaterial;
+
 	FTimeline Timeline;	
 };

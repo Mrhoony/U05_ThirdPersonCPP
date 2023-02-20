@@ -96,6 +96,7 @@ private:
 	UPROPERTY(VisibleDefaultsOnly)		class UCStateComponent* State;
 	UPROPERTY(VisibleDefaultsOnly)		class UCMontagesComponent* Montages;
 	UPROPERTY(VisibleDefaultsOnly)		class UCActionComponent* Action;
+	UPROPERTY(VisibleDefaultsOnly)		class UCFootComponent* Foot;
 
 private:
 	class UMaterialInstanceDynamic* BodyMaterial;
