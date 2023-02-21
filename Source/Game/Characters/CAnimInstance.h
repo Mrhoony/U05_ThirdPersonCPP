@@ -24,6 +24,9 @@ protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere)
 		FFootIKData FootData;
 
+	UPROPERTY(BlueprintReadOnly, EditAnywhere)
+		bool bIKActive;
+
 public:
 	virtual void NativeBeginPlay() override;
 	virtual void NativeUpdateAnimation(float DeltaSeconds) override;

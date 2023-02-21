@@ -30,6 +30,7 @@ void UCAnimInstance::NativeUpdateAnimation(float DeltaSeconds)
 	if (foot != nullptr)
 	{
 		FootData = foot->GetData();
+		bIKActive = foot->IsIK();
 	}
 }
 

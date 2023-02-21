@@ -2,6 +2,7 @@
 #include "Global.h"
 #include "Gameframework/Character.h"
 #include "Components/CapsuleComponent.h"
+#include "Engine/TriggerVolume.h"
 
 UCFootComponent::UCFootComponent()
 {
@@ -14,6 +15,16 @@ void UCFootComponent::BeginPlay()
 
 	OwnerCharacter = Cast<ACharacter>(GetOwner());
 	CapsuleHalfHeight = OwnerCharacter->GetCapsuleComponent()->GetScaledCapsuleHalfHeight();
+
+	TArray<AActor*> actors;
+	UGameplayStatics::GetAllActorsOfClass(GetWorld(), ATriggerVolume::StaticClass(), actors);
+	CheckTrue(actors.Num() < 1);
+
+	for (AActor* actor : actors)
+	{
+		actor->OnActorBeginOverlap.AddDynamic(this, &UCFootComponent::OnActorBeginOverlap);
+		actor->OnActorEndOverlap.AddDynamic(this, &UCFootComponent::OnActorEndOverlap);
+	}
 }
 
 void UCFootComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction)
@@ -34,6 +45,20 @@ void UCFootComponent::TickComponent(float DeltaTime, ELevelTick TickType, FActor
 	// foot을 로컬공간에서 조정
 	Data.LeftDistance.X = UKismetMathLibrary::FInterpTo(Data.LeftDistance.X, (leftDistance - offset), DeltaTime, InterpSpeed);
 	Data.RightDistance.X = UKismetMathLibrary::FInterpTo(Data.RightDistance.X, -(rightDistance - offset), DeltaTime, InterpSpeed);
+	Data.LeftRotation = UKismetMathLibrary::RInterpTo(Data.LeftRotation, leftRotation, DeltaTime, InterpSpeed);
+	Data.RightRotation = UKismetMathLibrary::RInterpTo(Data.RightRotation, rightRotation, DeltaTime, InterpSpeed);
+}
+
+void UCFootComponent::OnActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	CheckNull(Cast<ACharacter>(OtherActor));
+	bActive = true;
+}
+
+void UCFootComponent::OnActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor)
+{
+	CheckNull(Cast<ACharacter>(OtherActor));
+	bActive = false;
 }
 
 void UCFootComponent::Trace(FName InSocketName, float& OutDistance, FRotator& OutRotation)
@@ -83,6 +108,9 @@ void UCFootComponent::Trace(FName InSocketName, float& OutDistance, FRotator& Ou
 	FVector normal = hitResult.ImpactNormal;
 	float roll = UKismetMathLibrary::DegAtan2(normal.Y, normal.Z);
 	float pitch = -UKismetMathLibrary::DegAtan2(normal.X, normal.Z);
+
+	roll = FMath::Clamp(roll, -15.f, 15.f);
+	pitch = FMath::Clamp(pitch, -30.f, 30.f);
 
 	OutRotation = FRotator(pitch, 0, roll);
 }

@@ -37,16 +37,23 @@ public:
 
 public:
 	FORCEINLINE const FFootIKData GetData() { return Data; }
+	FORCEINLINE const bool IsIK() { return bActive; }
 
 protected:
 	virtual void BeginPlay() override;
 
-public:	
+public:
 	virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
 private:
-	void Trace(FName InSocketName, float& OutDistance, FRotator& OutRotation);
+	UFUNCTION()
+		void OnActorBeginOverlap(AActor* OverlappedActor, AActor* OtherActor);
+	UFUNCTION()
+		void OnActorEndOverlap(AActor* OverlappedActor, AActor* OtherActor);
 
+private:
+	void Trace(FName InSocketName, float& OutDistance, FRotator& OutRotation);
+	
 protected:
 	UPROPERTY(BlueprintReadOnly, EditAnywhere, Category = "IK")
 		FName LeftFootSocket = "Foot_l";
@@ -70,4 +77,5 @@ private:
 	class ACharacter* OwnerCharacter;
 	float CapsuleHalfHeight;
 	FFootIKData Data;
+	bool bActive;
 };
